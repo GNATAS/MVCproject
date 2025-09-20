@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Projects List</h2>
+    <form method="GET">
+        Search: <input type="text" name="search" value="{{ search }}"><br>
+        Category: <select name="category">
+            <option value="">All</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}" {% if category == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+            {% endfor %}
+        </select><br>
+        Sort: <select name="sort">
+            <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest</option>
+            <option value="near_deadline" {% if sort == 'near_deadline' %}selected{% endif %}>Near Deadline</option>
+            <option value="most_funded" {% if sort == 'most_funded' %}selected{% endif %}>Most Funded</option>
+        </select><br>
+        <input type="submit" value="Filter">
+    </form>
+    <ul>
+        {% for proj in projects %}
+            <li><a href="{{ url_for('project_detail', project_id=proj.id) }}">{{ proj.name }}</a> - Category: {{ proj.category_name }} - Funded: {{ proj.current_funded }} / {{ proj.goal }} - Deadline: {{ proj.deadline }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

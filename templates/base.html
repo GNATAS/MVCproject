@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crowdfunding App</title>
+</head>
+<body>
+    <h1>Crowdfunding System</h1>
+    {% if session.username %}
+        <p>Welcome, {{ session.username }} | <a href="{{ url_for('index') }}">Home</a> | <a href="{{ url_for('stats') }}">Stats</a> | <a href="{{ url_for('logout') }}">Logout</a> </p> 
+    {% endif %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</body>
+</html>

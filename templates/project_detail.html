@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>{{ project.name }}</h2>
+    <p>Goal: {{ project.goal }}</p>
+    <p>Current Funded: {{ project.current_funded }}</p>
+    <p>Deadline: {{ project.deadline }}</p>
+    <p>Category: {{ project.category_name }}</p>
+    <div class="progress-bar" style="width: 100%; background: #ddd;">
+        <div style="width: {{ progress }}%; background: green; height: 20px;"></div>
+    </div>
+    <h3>Reward Tiers</h3>
+    <ul>
+        {% for tier in tiers %}
+            <li>{{ tier.name }} - Min: {{ tier.min_amount }} - Quota: {{ tier.quota_remaining }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Pledge</h3>
+    <form method="POST">
+        Amount: <input type="number" name="amount" min="1" required><br>
+        Reward Tier: <select name="reward_tier_id">
+            <option value="">None</option>
+            {% for tier in tiers %}
+                <option value="{{ tier.id }}">{{ tier.name }}</option>
+            {% endfor %}
+        </select><br>
+        <input type="submit" value="Pledge">
+    </form>
+{% endblock %}
